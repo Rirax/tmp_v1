@@ -6,9 +6,6 @@ import re
 from fonctions import *
 from calculs import *
 
-import numpy as np
-import matplotlib.pyplot as plt
-
 draw = 0
 if len(sys.argv) <= 3:
 	if len(sys.argv) == 3:
@@ -25,9 +22,6 @@ if len(sys.argv) <= 3:
 		print "\033[31m------> Wrong input. Please enter a valid equation.\033[37m"
 	else:
 		p = re.compile(r'(.*) = (.*)')
-		# if p.search(argument) == None:
-		# 	init_tab_noequal(argument)
-		# else:
 		tab = init_tab(argument)
 		degree = find_degree(tab)
 		reduce_form(tab, degree)
@@ -35,21 +29,6 @@ if len(sys.argv) <= 3:
 		if degree <= 2:
 			equation = init_equation(tab)
 			which_solution(equation, degree, tab)
-		if draw == 1 and degree > 0:
-			coord = calculate_coord(tab)
-			points = np.array(coord)
-			# get x and y vectors
-			x = points[:,0]
-			y = points[:,1]
-			# calculate polynomial
-			z = np.polyfit(x, y, 3)
-			f = np.poly1d(z)
-			# calculate new x's and y's
-			x_new = np.linspace(x[0], x[-1], 50)
-			y_new = f(x_new)
-			plt.plot(x,y,'o', x_new, y_new)
-			plt.xlim([x[0]-1, x[-1] + 1 ])
-			plt.show()
 else:
 	print "\033[31mToo many arguments.\033[37m"
 
