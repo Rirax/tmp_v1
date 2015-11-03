@@ -62,14 +62,3 @@ def check_argument(arg):
 		return 1
 	else:
 		return 0
-
-
-
-
-
-
-
-
-
-
-
