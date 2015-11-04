@@ -55,6 +55,7 @@ def init_tab(argument):
 			tab.append(tab3)
 		j += 1
 	tab = tab1 + tab
+	print tab
 	return tab
 
 def check_argument(arg):

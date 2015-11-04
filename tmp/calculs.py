@@ -1,4 +1,4 @@
-class Equation(object):
+class equation(object):
 	"""docstring for Equation"""
 	def __init__(self):
 		self.c = 0
@@ -56,7 +56,7 @@ def find_degree(tab):
 def init_equation(tab):
 	i = 0
 	j = 0
-	eq = Equation()
+	eq = equation()
 	while i < len(tab):
 		if float(tab[i][1]) == 0:
 			eq.c = float(tab[i][0])
