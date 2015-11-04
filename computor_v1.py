@@ -3,45 +3,52 @@
 import sys
 import re
 
-# def reduce_form(tab, d):
-# 	i = 0
-# 	c = 0
-# 	a = 0
-# 	print "Reduced form:",
-# 	while i <= d:
-# 		j = 0
-# 		while j < len(tab):
-# 			if (float(tab[j][1]) == i):
-# 				if c == 1 and tab[j][0] != 0:
-# 					if tab[j][0] < 0:
-# 						print "-",
-# 						a = -tab[j][0]
-# 					else:
-# 						print "+",
-# 						a = tab[j][0]
-# 				else:
-# 					a = tab[j][0]
-# 				if (i == 0):
-# 					c = 1
-# 					print "%s" % (a),
-# 				elif i == 1:
-# 					c = 1
-# 					if a == 1:
-# 						print "X",
-# 					else:
-# 						print "%sX" % (a),
-# 				elif a != 0:
-# 					c = 1
-# 					if a == 1:
-# 						print "X^%s" % (tab[j][1]),
-# 					else:
-# 						print "%s * X^%s" % (a, tab[j][1]),
-# 				break;
-# 			j += 1
-# 		i += 1
+class coefficient(object):
+	def __init__(self):
+		self.c = 0
+		self.b = 0
+		self.a = 0
+
+def init_coef(tab):
+	i = 0
+	coef = coefficient()
+	while i < len(tab):
+		if float(tab[i][1]) == 0:
+			coef.c = float(tab[i][0])
+		elif float(tab[i][1]) == 1:
+			coef.b = float(tab[i][0])
+		elif float(tab[i][1]) == 2:
+			coef.a = float(tab[i][0])
+		i += 1
+	return coef
 
 def reduced_form(tab, d):
-	print tab
+	print "Reduced form:",
+	i = 0
+	while int(tab[i][1]) != 0:
+		i += 1
+	print str(tab[i][0]) + " * X^" + str(tab[i][1]),
+
+	i = 0
+	while int(tab[i][1]) != 1:
+		i += 1
+	if float(tab[i][0]) > 0:
+		print "+",
+	else:
+		tab[i][0] = -tab[i][0]
+		print "-",
+	print str(tab[i][0]) + " * X^" + str(tab[i][1]),
+
+	i = 0
+	while int(tab[i][1]) != 2:
+		i += 1
+	if float(tab[i][0]) > 0:
+		print "+",
+	else:
+		tab[i][0] = -float(tab[i][0])
+		print "-",
+	print str(tab[i][0]) + " * X^" + str(tab[i][1]),
+	print "= 0"
 
 def degree(tab):
 	d = 0
@@ -120,5 +127,7 @@ if len(sys.argv) <= 2:
 		d = degree(tab)
 		reduced_form(tab, d)
 		print "Polynomial degree:", d
+		coef = init_coef(tab)
+	print coef.a, coef.b, coef.c
 else:
 	print "Too many arguments !"
