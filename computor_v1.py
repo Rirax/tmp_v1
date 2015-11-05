@@ -3,6 +3,8 @@
 import sys
 import re
 
+from solver import *
+
 class coefficient(object):
 	def __init__(self):
 		self.c = 0
@@ -22,33 +24,65 @@ def init_coef(tab):
 		i += 1
 	return coef
 
-def reduced_form(tab, d):
+'''def reduced_form(tab, d):
 	print "Reduced form:",
 	i = 0
 	while int(tab[i][1]) != 0:
 		i += 1
 	print str(tab[i][0]) + " * X^" + str(tab[i][1]),
 
-	i = 0
-	while int(tab[i][1]) != 1:
-		i += 1
-	if float(tab[i][0]) > 0:
-		print "+",
-	else:
-		tab[i][0] = -tab[i][0]
-		print "-",
-	print str(tab[i][0]) + " * X^" + str(tab[i][1]),
+	if (d >= 1):
+		i = 0
+		while int(tab[i][1]) != 1:
+			i += 1
+		if float(tab[i][0]) > 0:
+			print "+ " + str(tab[i][0]),
+		else:
+			tab[i][0] = -float(tab[i][0])
+			print "- " + str(tab[i][0]),
+			tab[i][0] = -float(tab[i][0])
+		print "* X^" + str(tab[i][1]),
 
+	if (d >= 2):
+		i = 0
+		while int(tab[i][1]) != 2:
+			i += 1
+		if float(tab[i][0]) > 0:
+			print "+ " + str(tab[i][0]),
+		else:
+			tab[i][0] = -float(tab[i][0])
+			print "- " + str(tab[i][0]),
+			tab[i][0] = -float(tab[i][0])
+		print "* X^" + str(tab[i][1]),
+	print "= 0"'''
+
+def reduced_form(tab, d):
+	print "Reduced form:",
 	i = 0
-	while int(tab[i][1]) != 2:
+	f = 0
+	while i <= d:
+		j = 0
+		while int(tab[j][1]) != i:
+			j += 1
+		if float(tab[j][0]) > 0:
+			if f == 0:
+				print str(tab[j][0]),
+				f = 1
+			else:
+				print "+ " + str(tab[j][0]),
+			print "* X^" + str(tab[j][1]),
+		elif float(tab[j][0]) < 0:
+			tab[j][0] = -float(tab[j][0])
+			if f == 0:
+				print "-" + str(tab[j][0]),
+				f = 1
+			else:
+				print "- " + str(tab[j][0]),
+			tab[j][0] = -float(tab[j][0])
+			print "* X^" + str(tab[j][1]),
 		i += 1
-	if float(tab[i][0]) > 0:
-		print "+",
-	else:
-		tab[i][0] = -float(tab[i][0])
-		print "-",
-	print str(tab[i][0]) + " * X^" + str(tab[i][1]),
 	print "= 0"
+
 
 def degree(tab):
 	d = 0
@@ -128,6 +162,6 @@ if len(sys.argv) <= 2:
 		reduced_form(tab, d)
 		print "Polynomial degree:", d
 		coef = init_coef(tab)
-	print coef.a, coef.b, coef.c
+		which_solution(coef, d, tab)
 else:
 	print "Too many arguments !"
